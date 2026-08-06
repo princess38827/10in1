@@ -94,7 +94,10 @@ class LLMClient:
         cleaned = raw.strip()
         if cleaned.startswith("```"):
             lines = cleaned.split("\n")
+            # Drop opening fence (```json or ```) and closing fence (```)
             start = 1
+            if lines[0].startswith("```json"):
+                start = 1
             end = len(lines) - 1 if lines[-1].strip() == "```" else len(lines)
             cleaned = "\n".join(lines[start:end]).strip()
         try:
