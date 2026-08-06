@@ -93,9 +93,10 @@ class LLMClient:
         raw = await self.complete(system, user, max_tokens=max_tokens, temperature=temperature)
         cleaned = raw.strip()
         if cleaned.startswith("```"):
-            cleaned = cleaned.strip("`")
-            if cleaned.startswith("json"):
-                cleaned = cleaned[4:]
+            lines = cleaned.split("\n")
+            start = 1
+            end = len(lines) - 1 if lines[-1].strip() == "```" else len(lines)
+            cleaned = "\n".join(lines[start:end]).strip()
         try:
             return json.loads(cleaned)
         except json.JSONDecodeError as e:

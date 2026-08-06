@@ -133,8 +133,6 @@ class Synthesizer:
             system=self.SYSTEM, user=user, max_tokens=2500, temperature=0.4
         )
         return SynthesisResult(
-            run_id=run_id,
-            topic=topic,
             executive_summary=raw.get("executive_summary", ""),
             themes=raw.get("themes", []),
             contradictions=raw.get("contradictions", []),
